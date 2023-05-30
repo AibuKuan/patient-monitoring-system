@@ -97,7 +97,6 @@ public class loginForm extends javax.swing.JFrame {
 
         jLabel1.setText("Username:");
 
-        jTextField1.setText("jTextField1");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -105,8 +104,6 @@ public class loginForm extends javax.swing.JFrame {
         });
 
         jLabel2.setText("Password");
-
-        jPasswordField1.setText("jPasswordField1");
 
         jCheckBox1.setText("Show Password");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
