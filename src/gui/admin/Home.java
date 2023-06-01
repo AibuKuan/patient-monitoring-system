@@ -1,6 +1,5 @@
 
-package gui;
-
+package gui.admin;
 
 public class Home extends javax.swing.JFrame {
 
@@ -36,9 +35,10 @@ public class Home extends javax.swing.JFrame {
         jLabelSchedule = new javax.swing.JLabel();
         jPanelManual = new javax.swing.JPanel();
         jLabelManual = new javax.swing.JLabel();
+        jPanelCreateAccount = new javax.swing.JPanel();
+        jLabelCreateAccount = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(700, 500));
         setMinimumSize(new java.awt.Dimension(700, 500));
         setUndecorated(true);
 
@@ -104,7 +104,7 @@ public class Home extends javax.swing.JFrame {
         jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/placeholder-logo.png"))); // NOI18N
 
         jLabelTitle.setFont(new java.awt.Font("sansserif", 1, 36)); // NOI18N
-        jLabelTitle.setText("General Hospital");
+        jLabelTitle.setText("Administrator Panel");
 
         jLabelSlogan.setText("Lorem ipsum dolor sit ametelit. Aliquam eget.");
 
@@ -148,7 +148,7 @@ public class Home extends javax.swing.JFrame {
             .addGroup(jPanelPhysicianLayout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(jLabelPhysician)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
         jPanelPhysicianLayout.setVerticalGroup(
             jPanelPhysicianLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,7 +173,7 @@ public class Home extends javax.swing.JFrame {
             .addGroup(jPanelScheduleLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jLabelSchedule)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
         jPanelScheduleLayout.setVerticalGroup(
             jPanelScheduleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,22 +189,47 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        jLabelManual.setText("Physician List");
+        jLabelManual.setText("Manual");
 
         javax.swing.GroupLayout jPanelManualLayout = new javax.swing.GroupLayout(jPanelManual);
         jPanelManual.setLayout(jPanelManualLayout);
         jPanelManualLayout.setHorizontalGroup(
             jPanelManualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelManualLayout.createSequentialGroup()
-                .addContainerGap(55, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabelManual)
                 .addGap(69, 69, 69))
         );
         jPanelManualLayout.setVerticalGroup(
             jPanelManualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelManualLayout.createSequentialGroup()
-                .addContainerGap(64, Short.MAX_VALUE)
+                .addContainerGap(76, Short.MAX_VALUE)
                 .addComponent(jLabelManual)
+                .addGap(20, 20, 20))
+        );
+
+        jPanelCreateAccount.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanelCreateAccountMouseClicked(evt);
+            }
+        });
+
+        jLabelCreateAccount.setText("Create Account");
+
+        javax.swing.GroupLayout jPanelCreateAccountLayout = new javax.swing.GroupLayout(jPanelCreateAccount);
+        jPanelCreateAccount.setLayout(jPanelCreateAccountLayout);
+        jPanelCreateAccountLayout.setHorizontalGroup(
+            jPanelCreateAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCreateAccountLayout.createSequentialGroup()
+                .addContainerGap(38, Short.MAX_VALUE)
+                .addComponent(jLabelCreateAccount)
+                .addGap(69, 69, 69))
+        );
+        jPanelCreateAccountLayout.setVerticalGroup(
+            jPanelCreateAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCreateAccountLayout.createSequentialGroup()
+                .addContainerGap(64, Short.MAX_VALUE)
+                .addComponent(jLabelCreateAccount)
                 .addGap(20, 20, 20))
         );
 
@@ -218,20 +243,22 @@ public class Home extends javax.swing.JFrame {
                     .addGroup(jPanelBackgroundLayout.createSequentialGroup()
                         .addGap(107, 107, 107)
                         .addComponent(jLabelLogo)
-                        .addGap(41, 41, 41)
-                        .addGroup(jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGap(33, 33, 33)
+                        .addGroup(jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelTitle)
                             .addComponent(jLabelSlogan, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanelBackgroundLayout.createSequentialGroup()
-                        .addGap(86, 86, 86)
-                        .addGroup(jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanelPatient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanelSchedule, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(89, 89, 89)
+                        .addGap(36, 36, 36)
+                        .addGroup(jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanelPatient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanelSchedule, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanelPhysician, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanelManual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(70, Short.MAX_VALUE))
+                            .addComponent(jPanelManual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanelCreateAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         jPanelBackgroundLayout.setVerticalGroup(
             jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,22 +266,24 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(jPanelControl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelBackgroundLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelLogo))
+                    .addGroup(jPanelBackgroundLayout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addComponent(jLabelTitle)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabelSlogan))
-                    .addGroup(jPanelBackgroundLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabelLogo)))
-                .addGap(18, 18, 18)
+                        .addComponent(jLabelSlogan)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanelPatient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelPhysician, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanelCreateAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jPanelPatient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanelPhysician, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanelSchedule, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanelManual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 26, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -307,6 +336,14 @@ public class Home extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jPanelManualMouseClicked
 
+    private void jPanelCreateAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelCreateAccountMouseClicked
+        CreateAccount ca = new CreateAccount();
+        ca.setLocationRelativeTo(null);
+        ca.setVisible(true);
+        
+        this.dispose();
+    }//GEN-LAST:event_jPanelCreateAccountMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -344,6 +381,7 @@ public class Home extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabelAppName;
+    private javax.swing.JLabel jLabelCreateAccount;
     private javax.swing.JLabel jLabelExit;
     private javax.swing.JLabel jLabelLogo;
     private javax.swing.JLabel jLabelManual;
@@ -355,6 +393,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelTitle;
     private javax.swing.JPanel jPanelBackground;
     private javax.swing.JPanel jPanelControl;
+    private javax.swing.JPanel jPanelCreateAccount;
     private javax.swing.JPanel jPanelManual;
     private javax.swing.JPanel jPanelPatient;
     private javax.swing.JPanel jPanelPhysician;

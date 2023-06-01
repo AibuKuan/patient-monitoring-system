@@ -1,14 +1,14 @@
 
 package application;
 
-import gui.*;
+import gui.LoginForm;
 
 public class Main {
     
     public static void main(String[] args) {
-        Home home = new Home();
-        home.setLocationRelativeTo(null);
-        home.setVisible(true);
+        LoginForm login = new LoginForm();
+        login.setLocationRelativeTo(null);
+        login.setVisible(true);
     }
     
 }
