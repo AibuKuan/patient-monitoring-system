@@ -2,7 +2,6 @@
 package gui.admin;
 
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
-import com.formdev.flatlaf.ui.FlatRoundBorder;
 import com.formdev.flatlaf.ui.FlatTextBorder;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
@@ -11,17 +10,18 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
-import logic.CreateAccountValidation;
+import logic.CreateAccountLogic;
+import logic.ImageHandler;
 
 public class CreateAccount extends javax.swing.JFrame {
     
     Border redBorder = BorderFactory.createLineBorder(Color.RED);
-    
-   
+    String imagePath = null;
     /**
      * Creates new form CreateAccount
      */
@@ -31,8 +31,11 @@ public class CreateAccount extends javax.swing.JFrame {
         } catch (UnsupportedLookAndFeelException ex) {
             Logger.getLogger(CreateAccount.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.setLocationRelativeTo(null);
         initComponents();
-        
+        jRadioButtonMale.setActionCommand("Male");
+        jRadioButtonFemale.setActionCommand("Female");
+        jRadioButtonOther.setActionCommand("Other");
     }
 
     /**
@@ -45,7 +48,6 @@ public class CreateAccount extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroupSex = new javax.swing.ButtonGroup();
-        jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         jLabelHeader = new javax.swing.JLabel();
         jLabelPicName = new javax.swing.JLabel();
@@ -99,11 +101,9 @@ public class CreateAccount extends javax.swing.JFrame {
         jTextFieldPassword = new javax.swing.JTextField();
         jButtonReset = new javax.swing.JButton();
         jButtonSubmit = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelValidPrompt = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jScrollPane1.setViewportView(null);
 
         jPanel1.setLayout(null);
 
@@ -118,7 +118,7 @@ public class CreateAccount extends javax.swing.JFrame {
         jLabelPic.setBackground(new java.awt.Color(153, 255, 255));
         jLabelPic.setOpaque(true);
         jPanel1.add(jLabelPic);
-        jLabelPic.setBounds(40, 110, 120, 110);
+        jLabelPic.setBounds(40, 110, 120, 120);
 
         jButtonBrowse.setText("Browse");
         jButtonBrowse.addActionListener(new java.awt.event.ActionListener() {
@@ -127,7 +127,7 @@ public class CreateAccount extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButtonBrowse);
-        jButtonBrowse.setBounds(60, 230, 72, 23);
+        jButtonBrowse.setBounds(60, 240, 72, 23);
 
         jLabelFnameName.setText("First Name");
         jPanel1.add(jLabelFnameName);
@@ -210,7 +210,7 @@ public class CreateAccount extends javax.swing.JFrame {
         jPanel1.add(jLabelPosition);
         jLabelPosition.setBounds(210, 210, 48, 16);
 
-        jComboBoxPosition.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Physician", "Analyst" }));
+        jComboBoxPosition.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Doctor", "Analyst", "Admin" }));
         jComboBoxPosition.setSelectedIndex(-1);
         jPanel1.add(jComboBoxPosition);
         jComboBoxPosition.setBounds(200, 230, 130, 22);
@@ -219,7 +219,7 @@ public class CreateAccount extends javax.swing.JFrame {
         jPanel1.add(jLabelJob);
         jLabelJob.setBounds(350, 210, 26, 16);
 
-        jComboBoxJob.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "General Doctor", "Psychiatrists", "Obstetricians", "Neurologists", "Radiologists", "Anesthesiologists", "Pediatricians", "Cardiologists" }));
+        jComboBoxJob.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "General Doctor", "Psychiatrists", "Obstetricians", "Neurologists", "Radiologists", "Anesthesiologists", "Pediatricians", "Cardiologists", "Hospital Administrator" }));
         jComboBoxJob.setSelectedIndex(-1);
         jPanel1.add(jComboBoxJob);
         jComboBoxJob.setBounds(340, 230, 130, 22);
@@ -404,6 +404,12 @@ public class CreateAccount extends javax.swing.JFrame {
         jLabelUsername.setText("Username");
         jPanel1.add(jLabelUsername);
         jLabelUsername.setBounds(200, 510, 60, 16);
+
+        jTextFieldUsername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldUsernameActionPerformed(evt);
+            }
+        });
         jPanel1.add(jTextFieldUsername);
         jTextFieldUsername.setBounds(160, 530, 130, 22);
 
@@ -426,23 +432,27 @@ public class CreateAccount extends javax.swing.JFrame {
         jPanel1.add(jButtonSubmit);
         jButtonSubmit.setBounds(310, 590, 72, 23);
 
-        jLabel1.setForeground(new java.awt.Color(255, 51, 0));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("One or more fields are Empty!");
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(160, 630, 290, 16);
-
-        jScrollPane1.setViewportView(jPanel1);
+        jLabelValidPrompt.setForeground(new java.awt.Color(255, 51, 0));
+        jLabelValidPrompt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelValidPrompt.setText(" ");
+        jPanel1.add(jLabelValidPrompt);
+        jLabelValidPrompt.setBounds(160, 630, 290, 16);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 1, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 1, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 684, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 1, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 682, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 1, Short.MAX_VALUE))
         );
 
         pack();
@@ -457,7 +467,12 @@ public class CreateAccount extends javax.swing.JFrame {
     }//GEN-LAST:event_jRadioButtonMaleActionPerformed
 
     private void jButtonBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBrowseActionPerformed
-        // TODO add your handling code here:
+        ImageHandler imageHandler = new ImageHandler();
+        imagePath = imageHandler.browseImage(this);
+        
+        if (imagePath != null) {
+            jLabelPic.setIcon(imageHandler.resizeImage(jLabelPic, imagePath));
+        }
     }//GEN-LAST:event_jButtonBrowseActionPerformed
 
     private void jButtonSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSubmitActionPerformed
@@ -477,17 +492,24 @@ public class CreateAccount extends javax.swing.JFrame {
         ButtonGroup[] buttonArray = {buttonGroupSex};
         
         //CreateAccountValidation cav = new CreateAccountValidation(jTextFieldFname, jTextFieldMname, jTextFieldLname, jDateChooserDob, jComboBoxBlood, buttonGroupSex, jComboBoxPosition, jComboBoxJob, jDateChooserDhired, jComboBoxCountryCode, jTextFieldPhoneX, jTextFieldPhoneY, jTextFieldPhoneZ, jTextFieldEmail, jTextFieldStreet, jTextFieldBarangay, jTextFieldCity, jTextFieldProvince, jTextFieldCountry, jTextFieldUsername, jTextFieldPassword);
-        CreateAccountValidation cav = new CreateAccountValidation(textArray, dateArray, comboArray, buttonArray);
-        cav.ca = this;
+        CreateAccountLogic cal = new CreateAccountLogic(textArray, dateArray, comboArray, buttonArray, imagePath);
+        cal.ca = this;
         //cav.isEmpty(jTextFieldFname.getText(), jTextFieldMname.getText(), jTextFieldLname.getText(), jDateChooserDob.getDate(), jComboBoxBlood.getSelectedItem().toString(), buttonGroupSex.getSelection(), jComboBoxPosition.getSelectedItem().toString(), jComboBoxJob.getSelectedItem().toString(), jDateChooserDhired.getDate(), jComboBoxCountryCode.getSelectedItem().toString(), jTextFieldPhoneX.getText(), jTextFieldPhoneY.getText(), jTextFieldPhoneZ.getText(), jTextFieldEmail.getText(), jTextFieldStreet.getText(), jTextFieldBarangay.getText(), jTextFieldCity.getText(), jTextFieldProvince.getText(), jTextFieldCountry.getText(), jTextFieldUsername.getText(), jTextFieldPassword.getText());
         
-        if(cav.isEmpty()) {
+        if(!cal.isEmpty() && !cal.isUsernameExist()) {
+            Boolean status = cal.createNewAccount();
             
+            if (status) {
+                JOptionPane.showMessageDialog(this, "Account Created");
+            }else {
+                JOptionPane.showMessageDialog(this, "Something went wrong :(");
+            }
         }
-        
     }//GEN-LAST:event_jButtonSubmitActionPerformed
 
-    public void highlightEmptyFields(Boolean[] text, Boolean[] date, Boolean[] combo, Boolean[] button) {
+    public void highlightEmptyFields(Boolean[] text, Boolean[] date, Boolean[] combo, Boolean[] button, Boolean image) {
+        jLabelValidPrompt.setText("One or more field is empty!");
+        
         if (text[0]) jTextFieldFname.setBorder(redBorder);
         if (text[1]) jTextFieldMname.setBorder(redBorder);
         if (text[2]) jTextFieldLname.setBorder(redBorder);
@@ -516,7 +538,18 @@ public class CreateAccount extends javax.swing.JFrame {
             jRadioButtonFemale.setBorder(redBorder);
             jRadioButtonOther.setBorder(redBorder);
         }
+        
+        if (image) {
+            jLabelPic.setBorder(redBorder);
+        }
     }
+    
+    public void highlightUsername() {
+        jLabelValidPrompt.setText("The username already exist!");
+        jTextFieldUsername.setBorder(redBorder);
+    }
+    
+    
     
     private void jTextFieldPhoneXFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldPhoneXFocusGained
         if (jTextFieldPhoneX.getText().equals("XXX")) {
@@ -627,6 +660,10 @@ public class CreateAccount extends javax.swing.JFrame {
         jTextFieldLname.setBorder(new FlatTextBorder());
     }//GEN-LAST:event_jTextFieldLnameFocusGained
 
+    private void jTextFieldUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldUsernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldUsernameActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -654,7 +691,6 @@ public class CreateAccount extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBoxPosition;
     private com.toedter.calendar.JDateChooser jDateChooserDhired;
     private com.toedter.calendar.JDateChooser jDateChooserDob;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -680,11 +716,11 @@ public class CreateAccount extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelSex;
     private javax.swing.JLabel jLabelStreet;
     private javax.swing.JLabel jLabelUsername;
+    private javax.swing.JLabel jLabelValidPrompt;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButtonFemale;
     private javax.swing.JRadioButton jRadioButtonMale;
     private javax.swing.JRadioButton jRadioButtonOther;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldBarangay;
     private javax.swing.JTextField jTextFieldCity;
