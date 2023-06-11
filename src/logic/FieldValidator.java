@@ -4,7 +4,10 @@ package logic;
 import com.toedter.calendar.JDateChooser;
 import java.util.Date;
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
 public class FieldValidator {
@@ -95,6 +98,108 @@ public class FieldValidator {
 ////        
 ////        return hasNullField;
 //    }
+    private JTextField[] textArray;
+    private JDateChooser[] dateArray;
+    private JComboBox[] comboArray;
+    private ButtonGroup[] buttonArray;
+    private JSpinner[] spinnerArray;
+    private JFormattedTextField[] formattedArray;
+    private String imagePath;
+    
+    public String validate(JTextField[] textArray) {
+        this.textArray = textArray;
+        
+        if (isEmpty()) return "Please fill out every field.";
+        else return null;
+    }
+    
+    public String validate(JTextField[] textArray, JComboBox[] comboArray, JSpinner[] spinnerArray, JFormattedTextField[] formattedArray) {
+        this.textArray = textArray;
+        this.comboArray = comboArray;
+        this.spinnerArray = spinnerArray;
+        this.formattedArray = formattedArray;
+        
+        if (isEmpty()) return "Please fill out every field.";
+        else if (noChoosedOption()) return "Please choose from the options.";
+        else return null;
+        
+    }
+    
+    public String validate(JTextField[] textArray, JDateChooser[] dateArray, JComboBox[] comboArray, ButtonGroup[] buttonArray, String imagePath) {
+        this.textArray = textArray;
+        this.dateArray = dateArray;
+        this.comboArray = comboArray;
+        this.buttonArray = buttonArray;
+        this.imagePath = imagePath;
+        
+        if (isEmpty()) return "Please fill out every field.";
+        else if (noDate()) return "Please choose a date.";
+        else if (noChoosedOption()) return "Please choose from the option.";
+        else if (noButtonSelected()) return "Please select from the button";
+        else if (noSelectedPic()) return "Please choose a picture.";
+        else if (invalidPhone()) return "Please enter a valid phone number";
+        else if (usernameExist()) return "Username is already taken.";
+        else return null;
+    }
+    
+    private Boolean isEmpty() {
+        for (int i = 0; i < textArray.length; i++) {
+            String text = textArray[i].getText();
+            if (text.isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private Boolean noDate() {
+        for (int i = 0; i < dateArray.length; i++) {
+            if (dateArray[i].getDate() == null || dateArray[i].getDate().equals(new Date(0))) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private Boolean noChoosedOption() {
+        for (int i = 0; i < comboArray.length; i++) {
+            if ((String) comboArray[i].getSelectedItem() == null) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    private Boolean noButtonSelected() {
+        for (int i = 0; i < buttonArray.length; i++) {
+            ButtonModel selectedButton = buttonArray[i].getSelection();
+            if (selectedButton != null) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    private Boolean noSelectedPic() {
+        if (imagePath == null) {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    private Boolean invalidPhone() {
+//        if (textArray[3] < 100 || textArray[4] < 100 || textArray[5] < 1000) {
+//            return true;
+//        }
+        return false;
+    }
+    
+    private Boolean usernameExist() {
+        return false;
+    }
     
     public Boolean[] getEmptyFields(String[] stringArray) {
         int fieldCount = stringArray.length;

@@ -5,6 +5,7 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import com.formdev.flatlaf.ui.FlatTextBorder;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
@@ -16,7 +17,9 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
 import logic.CreateAccountLogic;
+import logic.FieldValidator;
 import logic.ImageHandler;
+import logic.AddPerson;
 
 public class CreateAccount extends javax.swing.JFrame {
     
@@ -33,6 +36,7 @@ public class CreateAccount extends javax.swing.JFrame {
         }
         this.setLocationRelativeTo(null);
         initComponents();
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         jRadioButtonMale.setActionCommand("Male");
         jRadioButtonFemale.setActionCommand("Female");
         jRadioButtonOther.setActionCommand("Other");
@@ -109,7 +113,7 @@ public class CreateAccount extends javax.swing.JFrame {
 
         jLabelHeader.setText("Create Account");
         jPanel1.add(jLabelHeader);
-        jLabelHeader.setBounds(40, 30, 82, 16);
+        jLabelHeader.setBounds(40, 50, 82, 16);
 
         jLabelPicName.setText("Picture");
         jPanel1.add(jLabelPicName);
@@ -264,6 +268,11 @@ public class CreateAccount extends javax.swing.JFrame {
                 jTextFieldPhoneXFocusLost(evt);
             }
         });
+        jTextFieldPhoneX.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldPhoneXActionPerformed(evt);
+            }
+        });
         jPanel1.add(jTextFieldPhoneX);
         jTextFieldPhoneX.setBounds(90, 370, 40, 20);
 
@@ -283,6 +292,11 @@ public class CreateAccount extends javax.swing.JFrame {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTextFieldPhoneYFocusLost(evt);
+            }
+        });
+        jTextFieldPhoneY.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldPhoneYActionPerformed(evt);
             }
         });
         jPanel1.add(jTextFieldPhoneY);
@@ -306,6 +320,11 @@ public class CreateAccount extends javax.swing.JFrame {
                 jTextFieldPhoneZFocusLost(evt);
             }
         });
+        jTextFieldPhoneZ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldPhoneZActionPerformed(evt);
+            }
+        });
         jPanel1.add(jTextFieldPhoneZ);
         jTextFieldPhoneZ.setBounds(190, 370, 50, 20);
 
@@ -319,7 +338,7 @@ public class CreateAccount extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jTextFieldEmail);
-        jTextFieldEmail.setBounds(260, 370, 160, 22);
+        jTextFieldEmail.setBounds(270, 370, 160, 22);
 
         jLabelStreet.setText("Street");
         jPanel1.add(jLabelStreet);
@@ -471,7 +490,7 @@ public class CreateAccount extends javax.swing.JFrame {
         imagePath = imageHandler.browseImage(this);
         
         if (imagePath != null) {
-            jLabelPic.setIcon(imageHandler.resizeImage(jLabelPic, imagePath));
+            jLabelPic.setIcon(imageHandler.resizeImage(jLabelPic, null, imagePath));
         }
     }//GEN-LAST:event_jButtonBrowseActionPerformed
 
@@ -491,20 +510,36 @@ public class CreateAccount extends javax.swing.JFrame {
         JComboBox[] comboArray = {jComboBoxBlood, jComboBoxPosition, jComboBoxJob, jComboBoxCountryCode};
         ButtonGroup[] buttonArray = {buttonGroupSex};
         
-        //CreateAccountValidation cav = new CreateAccountValidation(jTextFieldFname, jTextFieldMname, jTextFieldLname, jDateChooserDob, jComboBoxBlood, buttonGroupSex, jComboBoxPosition, jComboBoxJob, jDateChooserDhired, jComboBoxCountryCode, jTextFieldPhoneX, jTextFieldPhoneY, jTextFieldPhoneZ, jTextFieldEmail, jTextFieldStreet, jTextFieldBarangay, jTextFieldCity, jTextFieldProvince, jTextFieldCountry, jTextFieldUsername, jTextFieldPassword);
-        CreateAccountLogic cal = new CreateAccountLogic(textArray, dateArray, comboArray, buttonArray, imagePath);
-        cal.ca = this;
-        //cav.isEmpty(jTextFieldFname.getText(), jTextFieldMname.getText(), jTextFieldLname.getText(), jDateChooserDob.getDate(), jComboBoxBlood.getSelectedItem().toString(), buttonGroupSex.getSelection(), jComboBoxPosition.getSelectedItem().toString(), jComboBoxJob.getSelectedItem().toString(), jDateChooserDhired.getDate(), jComboBoxCountryCode.getSelectedItem().toString(), jTextFieldPhoneX.getText(), jTextFieldPhoneY.getText(), jTextFieldPhoneZ.getText(), jTextFieldEmail.getText(), jTextFieldStreet.getText(), jTextFieldBarangay.getText(), jTextFieldCity.getText(), jTextFieldProvince.getText(), jTextFieldCountry.getText(), jTextFieldUsername.getText(), jTextFieldPassword.getText());
-        
-        if(!cal.isEmpty() && !cal.isUsernameExist()) {
-            Boolean status = cal.createNewAccount();
-            
-            if (status) {
+        FieldValidator fv = new FieldValidator();
+        String message = fv.validate(textArray, dateArray, comboArray, buttonArray, imagePath);
+        if (message != null) {
+            jLabelValidPrompt.setText(message);
+        }else {
+            //CreateAccountValidation cav = new CreateAccountValidation(jTextFieldFname, jTextFieldMname, jTextFieldLname, jDateChooserDob, jComboBoxBlood, buttonGroupSex, jComboBoxPosition, jComboBoxJob, jDateChooserDhired, jComboBoxCountryCode, jTextFieldPhoneX, jTextFieldPhoneY, jTextFieldPhoneZ, jTextFieldEmail, jTextFieldStreet, jTextFieldBarangay, jTextFieldCity, jTextFieldProvince, jTextFieldCountry, jTextFieldUsername, jTextFieldPassword);
+            AddPerson ra = new AddPerson();
+            if (ra.addEmployee(textArray, dateArray, comboArray, buttonArray, imagePath)) {
                 JOptionPane.showMessageDialog(this, "Account Created");
-            }else {
+            } else {
                 JOptionPane.showMessageDialog(this, "Something went wrong :(");
             }
         }
+        
+        
+        
+        
+//        CreateAccountLogic cal = new CreateAccountLogic(textArray, dateArray, comboArray, buttonArray, imagePath);
+//        cal.ca = this;
+//        //cav.isEmpty(jTextFieldFname.getText(), jTextFieldMname.getText(), jTextFieldLname.getText(), jDateChooserDob.getDate(), jComboBoxBlood.getSelectedItem().toString(), buttonGroupSex.getSelection(), jComboBoxPosition.getSelectedItem().toString(), jComboBoxJob.getSelectedItem().toString(), jDateChooserDhired.getDate(), jComboBoxCountryCode.getSelectedItem().toString(), jTextFieldPhoneX.getText(), jTextFieldPhoneY.getText(), jTextFieldPhoneZ.getText(), jTextFieldEmail.getText(), jTextFieldStreet.getText(), jTextFieldBarangay.getText(), jTextFieldCity.getText(), jTextFieldProvince.getText(), jTextFieldCountry.getText(), jTextFieldUsername.getText(), jTextFieldPassword.getText());
+//        
+//        if(!cal.isEmpty() && !cal.isUsernameExist()) {
+//            Boolean status = cal.createNewAccount();
+//            
+//            if (status) {
+//                JOptionPane.showMessageDialog(this, "Account Created");
+//            }else {
+//                JOptionPane.showMessageDialog(this, "Something went wrong :(");
+//            }
+//        }
     }//GEN-LAST:event_jButtonSubmitActionPerformed
 
     public void highlightEmptyFields(Boolean[] text, Boolean[] date, Boolean[] combo, Boolean[] button, Boolean image) {
@@ -663,6 +698,57 @@ public class CreateAccount extends javax.swing.JFrame {
     private void jTextFieldUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldUsernameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldUsernameActionPerformed
+
+    private void jTextFieldPhoneXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPhoneXActionPerformed
+        Object source = evt.getSource();
+
+        if (source instanceof JTextField) {
+            JTextField textField = (JTextField) source;
+            String text = textField.getText().trim();
+
+            if (!text.isEmpty()) {
+                int value = Integer.parseInt(text);
+                if (value > 99) {
+                    jTextFieldPhoneY.requestFocus();
+                    // Add your logic here for Enter key press
+                }
+            }
+        }
+    }//GEN-LAST:event_jTextFieldPhoneXActionPerformed
+
+    private void jTextFieldPhoneYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPhoneYActionPerformed
+        Object source = evt.getSource();
+
+        if (source instanceof JTextField) {
+            JTextField textField = (JTextField) source;
+            String text = textField.getText().trim();
+
+            if (!text.isEmpty()) {
+                int value = Integer.parseInt(text);
+                if (value > 99) {
+                    jTextFieldPhoneZ.requestFocus();
+                    // Add your logic here for Enter key press
+                }
+            }
+        }
+    }//GEN-LAST:event_jTextFieldPhoneYActionPerformed
+
+    private void jTextFieldPhoneZActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPhoneZActionPerformed
+        Object source = evt.getSource();
+
+        if (source instanceof JTextField) {
+            JTextField textField = (JTextField) source;
+            String text = textField.getText().trim();
+
+            if (!text.isEmpty()) {
+                int value = Integer.parseInt(text);
+                if (value > 99) {
+                    jTextFieldEmail.requestFocus();
+                    // Add your logic here for Enter key press
+                }
+            }
+        }
+    }//GEN-LAST:event_jTextFieldPhoneZActionPerformed
 
     /**
      * @param args the command line arguments

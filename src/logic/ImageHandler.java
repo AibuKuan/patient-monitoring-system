@@ -1,7 +1,11 @@
 
 package logic;
 
+import com.mysql.cj.jdbc.Blob;
 import java.awt.Image;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -25,8 +29,14 @@ public class ImageHandler {
         return imagePath;
     }
     
-    public ImageIcon resizeImage(JLabel container, String imagePath) {
-        ImageIcon imageIcon = new ImageIcon(imagePath);
+    public ImageIcon resizeImage(JLabel container, byte[] BLOBpic, String imagePath) {
+        ImageIcon imageIcon;
+        if (imagePath != null) {
+            imageIcon = new ImageIcon(imagePath);
+        }else {
+            imageIcon = new ImageIcon(BLOBpic);
+        }
+        
         Image image = imageIcon.getImage();
         Image resizedImage = image.getScaledInstance(container.getWidth(), container.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon resizedIcon = new ImageIcon(resizedImage);

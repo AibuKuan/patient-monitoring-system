@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 import java.sql.ResultSetMetaData;
 
 public class TableHandler {
-    public DefaultTableModel getDoctorsData() {
+    public DefaultTableModel getAllData(String tableName) {
         User user = new User();
         DefaultTableModel tableModel = new DefaultTableModel();
         ResultSet rs = null;
@@ -18,7 +18,7 @@ public class TableHandler {
         if ("Admin".equals(user.getRole())) {
             try {
                 ReadOperation read = new ReadOperation();
-                rs = read.getDoctors();
+                rs = read.readAll(tableName);
                 
                 int columnCount = rs.getMetaData().getColumnCount();
                 ResultSetMetaData metaData = rs.getMetaData();
@@ -43,78 +43,34 @@ public class TableHandler {
         
         return tableModel;
     }
-
-    public DefaultTableModel getPatientsData() {
-        User user = new User();
-        DefaultTableModel tableModel = new DefaultTableModel();
-        ResultSet rs = null;
-
-        if ("Admin".equals(user.getRole())) {
-            try {
-                ReadOperation read = new ReadOperation();
-                rs = read.getPatients();
-
-                int columnCount;
-                ResultSetMetaData metaData;
-
-                Object[] rowData;
-                while (rs.next()) {
-                    columnCount = rs.getMetaData().getColumnCount();
-                    metaData = rs.getMetaData();
-                    for (int i = 1; i <= columnCount; i++) {
-                        tableModel.addColumn(metaData.getColumnName(i));
-                    }
-                    
-                    rowData = new Object[columnCount];
-                    for (int i = 0; i < columnCount; i++) {
-                        rowData[i] = rs.getObject(i + 1);
-                    }
-
-                    tableModel.addRow(rowData);
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(TableHandler.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            System.out.println("not an admin");
-        }
-
-        return tableModel;
-    }
     
-    public DefaultTableModel getDrugsData() {
-        User user = new User();
+    public DefaultTableModel getPatientCondition(int id) {
         DefaultTableModel tableModel = new DefaultTableModel();
-        ResultSet rs = null;
+        ResultSet rs;
 
-        if ("Admin".equals(user.getRole())) {
-            try {
-                ReadOperation read = new ReadOperation();
-                rs = read.getDrugs();
+        try {
+            ReadOperation read = new ReadOperation();
+            rs = read.readHealthCondition(id);
+                if (rs != null) {
+                int hlthCndtnColumnCount = rs.getMetaData().getColumnCount();
+                ResultSetMetaData hlthCndtnColumnName = rs.getMetaData();
+                for (int i = 1; i <= hlthCndtnColumnCount; i++) {
+                    tableModel.addColumn(hlthCndtnColumnName.getColumnName(i));
+                }
 
-                int columnCount;
-                ResultSetMetaData metaData;
-
-                Object[] rowData;
                 while (rs.next()) {
-                    columnCount = rs.getMetaData().getColumnCount();
-                    metaData = rs.getMetaData();
-                    for (int i = 1; i <= columnCount; i++) {
-                        tableModel.addColumn(metaData.getColumnName(i));
-                    }
-                    
-                    rowData = new Object[columnCount];
-                    for (int i = 0; i < columnCount; i++) {
-                        rowData[i] = rs.getObject(i + 1);
+                    Object[] rowData = new Object[tableModel.getColumnCount()];
+                    //adding health_condition data
+                    for (int i = 1; i <= hlthCndtnColumnCount; i++) {
+                        rowData[i-1] = rs.getObject(i);
                     }
 
                     tableModel.addRow(rowData);
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(TableHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else {
-            System.out.println("not an admin");
+
+        } catch (SQLException ex) {
+            Logger.getLogger(TableHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return tableModel;

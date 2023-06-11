@@ -37,6 +37,8 @@ public class Home extends javax.swing.JFrame {
         jLabelManual = new javax.swing.JLabel();
         jPanelCreateAccount = new javax.swing.JPanel();
         jLabelCreateAccount = new javax.swing.JLabel();
+        jPanelManual1 = new javax.swing.JPanel();
+        jLabelManual1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(700, 500));
@@ -45,6 +47,7 @@ public class Home extends javax.swing.JFrame {
         jPanelBackground.setBackground(new java.awt.Color(204, 255, 255));
         jPanelBackground.setMaximumSize(new java.awt.Dimension(645, 425));
         jPanelBackground.setMinimumSize(new java.awt.Dimension(645, 425));
+        jPanelBackground.setLayout(null);
 
         jPanelControl.setBackground(new java.awt.Color(51, 153, 255));
         jPanelControl.setMaximumSize(new java.awt.Dimension(32767, 25));
@@ -101,12 +104,21 @@ public class Home extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanelBackground.add(jPanelControl);
+        jPanelControl.setBounds(0, 0, 645, 25);
+
         jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/placeholder-logo.png"))); // NOI18N
+        jPanelBackground.add(jLabelLogo);
+        jLabelLogo.setBounds(107, 43, 126, 126);
 
         jLabelTitle.setFont(new java.awt.Font("sansserif", 1, 36)); // NOI18N
         jLabelTitle.setText("Administrator Panel");
+        jPanelBackground.add(jLabelTitle);
+        jLabelTitle.setBounds(266, 62, 338, 47);
 
         jLabelSlogan.setText("Lorem ipsum dolor sit ametelit. Aliquam eget.");
+        jPanelBackground.add(jLabelSlogan);
+        jLabelSlogan.setBounds(266, 127, 268, 16);
 
         jPanelPatient.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -133,13 +145,16 @@ public class Home extends javax.swing.JFrame {
                 .addGap(24, 24, 24))
         );
 
+        jPanelBackground.add(jPanelPatient);
+        jPanelPatient.setBounds(36, 175, 197, 100);
+
         jPanelPhysician.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanelPhysicianMouseClicked(evt);
             }
         });
 
-        jLabelPhysician.setText("Physician List");
+        jLabelPhysician.setText("Employee List");
 
         javax.swing.GroupLayout jPanelPhysicianLayout = new javax.swing.GroupLayout(jPanelPhysician);
         jPanelPhysician.setLayout(jPanelPhysicianLayout);
@@ -158,13 +173,16 @@ public class Home extends javax.swing.JFrame {
                 .addGap(15, 15, 15))
         );
 
+        jPanelBackground.add(jPanelPhysician);
+        jPanelPhysician.setBounds(251, 175, 166, 100);
+
         jPanelSchedule.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanelScheduleMouseClicked(evt);
             }
         });
 
-        jLabelSchedule.setText("Physician List");
+        jLabelSchedule.setText("Drug List");
 
         javax.swing.GroupLayout jPanelScheduleLayout = new javax.swing.GroupLayout(jPanelSchedule);
         jPanelSchedule.setLayout(jPanelScheduleLayout);
@@ -183,13 +201,16 @@ public class Home extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanelBackground.add(jPanelSchedule);
+        jPanelSchedule.setBounds(36, 287, 173, 124);
+
         jPanelManual.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanelManualMouseClicked(evt);
             }
         });
 
-        jLabelManual.setText("Manual");
+        jLabelManual.setText("Room List");
 
         javax.swing.GroupLayout jPanelManualLayout = new javax.swing.GroupLayout(jPanelManual);
         jPanelManual.setLayout(jPanelManualLayout);
@@ -203,10 +224,13 @@ public class Home extends javax.swing.JFrame {
         jPanelManualLayout.setVerticalGroup(
             jPanelManualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelManualLayout.createSequentialGroup()
-                .addContainerGap(76, Short.MAX_VALUE)
+                .addContainerGap(88, Short.MAX_VALUE)
                 .addComponent(jLabelManual)
                 .addGap(20, 20, 20))
         );
+
+        jPanelBackground.add(jPanelManual);
+        jPanelManual.setBounds(251, 287, 166, 124);
 
         jPanelCreateAccount.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -214,14 +238,14 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        jLabelCreateAccount.setText("Drug list");
+        jLabelCreateAccount.setText("Create Account");
 
         javax.swing.GroupLayout jPanelCreateAccountLayout = new javax.swing.GroupLayout(jPanelCreateAccount);
         jPanelCreateAccount.setLayout(jPanelCreateAccountLayout);
         jPanelCreateAccountLayout.setHorizontalGroup(
             jPanelCreateAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCreateAccountLayout.createSequentialGroup()
-                .addContainerGap(38, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabelCreateAccount)
                 .addGap(69, 69, 69))
         );
@@ -233,57 +257,36 @@ public class Home extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
         );
 
-        javax.swing.GroupLayout jPanelBackgroundLayout = new javax.swing.GroupLayout(jPanelBackground);
-        jPanelBackground.setLayout(jPanelBackgroundLayout);
-        jPanelBackgroundLayout.setHorizontalGroup(
-            jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelControl, javax.swing.GroupLayout.DEFAULT_SIZE, 645, Short.MAX_VALUE)
-            .addGroup(jPanelBackgroundLayout.createSequentialGroup()
-                .addGroup(jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelBackgroundLayout.createSequentialGroup()
-                        .addGap(107, 107, 107)
-                        .addComponent(jLabelLogo)
-                        .addGap(33, 33, 33)
-                        .addGroup(jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelTitle)
-                            .addComponent(jLabelSlogan, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanelBackgroundLayout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addGroup(jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanelPatient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanelSchedule, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanelPhysician, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanelManual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanelCreateAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(41, Short.MAX_VALUE))
+        jPanelBackground.add(jPanelCreateAccount);
+        jPanelCreateAccount.setBounds(432, 175, 160, 100);
+
+        jPanelManual1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanelManual1MouseClicked(evt);
+            }
+        });
+
+        jLabelManual1.setText("Manual");
+
+        javax.swing.GroupLayout jPanelManual1Layout = new javax.swing.GroupLayout(jPanelManual1);
+        jPanelManual1.setLayout(jPanelManual1Layout);
+        jPanelManual1Layout.setHorizontalGroup(
+            jPanelManual1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelManual1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelManual1)
+                .addGap(69, 69, 69))
         );
-        jPanelBackgroundLayout.setVerticalGroup(
-            jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBackgroundLayout.createSequentialGroup()
-                .addComponent(jPanelControl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelBackgroundLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabelLogo))
-                    .addGroup(jPanelBackgroundLayout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(jLabelTitle)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabelSlogan)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanelCreateAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelPatient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelPhysician, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanelSchedule, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelManual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(26, Short.MAX_VALUE))
+        jPanelManual1Layout.setVerticalGroup(
+            jPanelManual1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelManual1Layout.createSequentialGroup()
+                .addContainerGap(84, Short.MAX_VALUE)
+                .addComponent(jLabelManual1)
+                .addGap(20, 20, 20))
         );
+
+        jPanelBackground.add(jPanelManual1);
+        jPanelManual1.setBounds(430, 290, 160, 120);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -315,23 +318,22 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanelPatientMouseClicked
 
     private void jPanelPhysicianMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelPhysicianMouseClicked
-        PhysicianFrame physicianFrame = new PhysicianFrame();
+        EmployeeList physicianFrame = new EmployeeList();
         physicianFrame.setLocationRelativeTo(null);
         physicianFrame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jPanelPhysicianMouseClicked
 
     private void jPanelScheduleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelScheduleMouseClicked
-        ScheduleForm scheduleForm = new ScheduleForm();
-        scheduleForm.setLocationRelativeTo(null);
-        scheduleForm.setVisible(true);
+        DrugListFrame drugList = new DrugListFrame();
+        drugList.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jPanelScheduleMouseClicked
 
     private void jPanelManualMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelManualMouseClicked
-        ManualForm manualForm = new ManualForm();
-        manualForm.setLocationRelativeTo(null);
-        manualForm.setVisible(true);
+        RoomListFrame roomList = new RoomListFrame();
+        roomList.setLocationRelativeTo(null);
+        roomList.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jPanelManualMouseClicked
 
@@ -342,6 +344,10 @@ public class Home extends javax.swing.JFrame {
         
         this.dispose();
     }//GEN-LAST:event_jPanelCreateAccountMouseClicked
+
+    private void jPanelManual1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelManual1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanelManual1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -384,6 +390,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelExit;
     private javax.swing.JLabel jLabelLogo;
     private javax.swing.JLabel jLabelManual;
+    private javax.swing.JLabel jLabelManual1;
     private javax.swing.JLabel jLabelMinimize;
     private javax.swing.JLabel jLabelPatient;
     private javax.swing.JLabel jLabelPhysician;
@@ -394,6 +401,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelControl;
     private javax.swing.JPanel jPanelCreateAccount;
     private javax.swing.JPanel jPanelManual;
+    private javax.swing.JPanel jPanelManual1;
     private javax.swing.JPanel jPanelPatient;
     private javax.swing.JPanel jPanelPhysician;
     private javax.swing.JPanel jPanelSchedule;

@@ -7,6 +7,8 @@ import logic.TableHandler;
 
 public class PatientFrame extends javax.swing.JFrame {
 
+    int selectedRow;
+    int id;
     /**
      * Creates new form PatientFrame
      */
@@ -27,11 +29,12 @@ public class PatientFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -44,10 +47,6 @@ public class PatientFrame extends javax.swing.JFrame {
         jButton1.setText("Delete");
         jPanel1.add(jButton1);
         jButton1.setBounds(780, 30, 72, 23);
-
-        jButton2.setText("Edit");
-        jPanel1.add(jButton2);
-        jButton2.setBounds(670, 30, 72, 23);
 
         jButton3.setText("Add");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -73,10 +72,34 @@ public class PatientFrame extends javax.swing.JFrame {
         jScrollPane1.setPreferredSize(new java.awt.Dimension(870, 450));
 
         jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(30, 80, 870, 450);
+
+        jLabel2.setText("Back");
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel2);
+        jLabel2.setBounds(40, 10, 25, 16);
+
+        jButton4.setText("View");
+        jButton4.setEnabled(false);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton4);
+        jButton4.setBounds(670, 30, 72, 23);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -94,7 +117,7 @@ public class PatientFrame extends javax.swing.JFrame {
 
     private void populateTable() {
         TableHandler tableHandler = new TableHandler();
-        DefaultTableModel tableModel = tableHandler.getPatientsData();
+        DefaultTableModel tableModel = tableHandler.getAllData("patients");
         jTable1.setModel(tableModel);
     }
     
@@ -106,6 +129,29 @@ public class PatientFrame extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        Home home = new Home();
+        home.setLocationRelativeTo(null);
+        home.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        selectedRow = jTable1.getSelectedRow();
+        if(selectedRow != -1) {
+            jButton4.setEnabled(true);
+            id = (int) jTable1.getValueAt(selectedRow, 0);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        jTable1.requestFocus();
+        DetailedPatientFrame.id = id;
+        DetailedPatientFrame dpt = new DetailedPatientFrame();
+        dpt.setLocationRelativeTo(null);
+        dpt.setVisible(true);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -144,9 +190,10 @@ public class PatientFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

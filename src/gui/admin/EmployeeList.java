@@ -4,12 +4,12 @@ package gui.admin;
 import javax.swing.table.DefaultTableModel;
 import logic.*;
 
-public class PhysicianFrame extends javax.swing.JFrame {
+public class EmployeeList extends javax.swing.JFrame {
 
     /**
      * Creates new form PhysicianFrame
      */
-    public PhysicianFrame() {
+    public EmployeeList() {
         initComponents();
         populateTable();
         
@@ -32,6 +32,7 @@ public class PhysicianFrame extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -39,15 +40,15 @@ public class PhysicianFrame extends javax.swing.JFrame {
 
         jLabel1.setText("Physician List");
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(40, 30, 88, 29);
+        jLabel1.setBounds(40, 70, 88, 29);
 
         jButton1.setText("Delete");
         jPanel1.add(jButton1);
-        jButton1.setBounds(780, 30, 72, 23);
+        jButton1.setBounds(780, 70, 72, 23);
 
         jButton2.setText("Edit");
         jPanel1.add(jButton2);
-        jButton2.setBounds(670, 30, 72, 23);
+        jButton2.setBounds(670, 70, 72, 23);
 
         jButton3.setText("Add");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -56,7 +57,7 @@ public class PhysicianFrame extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton3);
-        jButton3.setBounds(560, 30, 72, 23);
+        jButton3.setBounds(560, 70, 72, 23);
 
         jTextField1.setText("Search");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -65,7 +66,7 @@ public class PhysicianFrame extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jTextField1);
-        jTextField1.setBounds(150, 30, 230, 22);
+        jTextField1.setBounds(140, 70, 230, 22);
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         jScrollPane1.setMaximumSize(new java.awt.Dimension(870, 450));
@@ -77,7 +78,16 @@ public class PhysicianFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(30, 80, 870, 450);
+        jScrollPane1.setBounds(30, 120, 870, 450);
+
+        jLabel2.setText("Back");
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel2);
+        jLabel2.setBounds(60, 20, 25, 16);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,18 +105,26 @@ public class PhysicianFrame extends javax.swing.JFrame {
 
     private void populateTable() {
         TableHandler tableHandler = new TableHandler();
-        DefaultTableModel tableModel = tableHandler.getDoctorsData();
+        DefaultTableModel tableModel = tableHandler.getAllData("employees");
        //System.out.println(tableHandler.getDoctorsData());
         jTable1.setModel(tableModel);
     }
     
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        CreateAccount caf = new CreateAccount();
+        caf.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        Home home = new Home();
+        home.setLocationRelativeTo(null);
+        home.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel2MouseClicked
 
     
     /**
@@ -126,20 +144,21 @@ public class PhysicianFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PhysicianFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EmployeeList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PhysicianFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EmployeeList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PhysicianFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EmployeeList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PhysicianFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EmployeeList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PhysicianFrame().setVisible(true);
+                new EmployeeList().setVisible(true);
             }
         });
     }
@@ -149,6 +168,7 @@ public class PhysicianFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

@@ -14,7 +14,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import logic.FieldValidator;
 import logic.ImageHandler;
-import logic.RecordAdder;
+import logic.AddPerson;
 
 public class AddPatientForm extends javax.swing.JFrame {
 
@@ -586,7 +586,7 @@ public class AddPatientForm extends javax.swing.JFrame {
         imagePath = imageHandler.browseImage(this);
 
         if (imagePath != null) {
-            jLabelPic.setIcon(imageHandler.resizeImage(jLabelPic, imagePath));
+            jLabelPic.setIcon(imageHandler.resizeImage(jLabelPic, null, imagePath));
         }
     }//GEN-LAST:event_jButtonBrowseActionPerformed
 
@@ -606,8 +606,8 @@ public class AddPatientForm extends javax.swing.JFrame {
         JComboBox[] comboArray = {jComboBoxBlood, jComboBoxCountryCode, jComboBoxEmgCountryCode};
         ButtonGroup[] buttonArray = {buttonGroupSex};
         
-        RecordAdder ra = new RecordAdder();
-        if (ra.addPatient(this, textArray, dateArray, comboArray, buttonArray, imagePath)) {
+        AddPerson ap = new AddPerson();
+        if (ap.addPatient(this, textArray, dateArray, comboArray, buttonArray, imagePath)) {
             JOptionPane.showMessageDialog(this, "Patient Added Successfully");
         }else {
             JOptionPane.showMessageDialog(this, "Account Not Added. Something Went Wrong :(");
