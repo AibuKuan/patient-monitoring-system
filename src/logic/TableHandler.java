@@ -9,10 +9,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.ResultSetMetaData;
 
-public class TableHandler {
-    public DefaultTableModel getAllData(String tableName) {
+public class TableHandler extends DefaultTableModel {
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        return false;
+    }
+    
+    public TableHandler getAllData(String tableName) {
         User user = new User();
-        DefaultTableModel tableModel = new DefaultTableModel();
+        TableHandler tableModel = new TableHandler();
         ResultSet rs = null;
         
         if ("Admin".equals(user.getRole())) {
@@ -44,8 +49,8 @@ public class TableHandler {
         return tableModel;
     }
     
-    public DefaultTableModel getPatientCondition(int id) {
-        DefaultTableModel tableModel = new DefaultTableModel();
+    public TableHandler getPatientCondition(int id) {
+        TableHandler tableModel = new TableHandler();
         ResultSet rs;
 
         try {

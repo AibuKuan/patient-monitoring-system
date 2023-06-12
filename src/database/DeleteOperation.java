@@ -11,7 +11,7 @@ public class DeleteOperation {
     
     public int deleteHealthCondition(String tableName, String idName, int id) {
         String query = "DELETE FROM " + tableName + " WHERE " + idName + " = ?";
-        
+        System.out.println(tableName);
         try {
             PreparedStatement statement = con.prepareStatement(query);
             statement.setInt(1, id);

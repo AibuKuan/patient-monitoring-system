@@ -63,7 +63,7 @@ public class ReadOperation {
         } catch (SQLException ex) {
             Logger.getLogger(ReadOperation.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("readHealthCondition didn't succeed: id = " + id);
+        System.out.println("Patient Health Conditon ResultSet is Empty. Patient ID = " + id);
         return null;
     }
 }

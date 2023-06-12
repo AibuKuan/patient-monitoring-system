@@ -32,6 +32,7 @@ public class DetailedPatientFrame extends javax.swing.JFrame {
     Timer timer;
     int health_id;
     Boolean hidden = true;
+    String imagePath;
     /**
      * Creates new form DetailedPatientFrame
      */
@@ -150,7 +151,7 @@ public class DetailedPatientFrame extends javax.swing.JFrame {
         jLabel37 = new javax.swing.JLabel();
         jTextFieldEmgFname = new javax.swing.JTextField();
         jLabel39 = new javax.swing.JLabel();
-        jTextFieldEmgLname = new javax.swing.JTextField();
+        jTextFieldRelationship = new javax.swing.JTextField();
         jComboBoxEmgCountryCode = new javax.swing.JComboBox<>();
         jTextFieldEmgPhoneX = new javax.swing.JTextField();
         jTextFieldEmgPhoneY = new javax.swing.JTextField();
@@ -162,9 +163,7 @@ public class DetailedPatientFrame extends javax.swing.JFrame {
         jLabel43 = new javax.swing.JLabel();
         jLabel44 = new javax.swing.JLabel();
         jLabel45 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        jButtonDeletePatientRecord = new javax.swing.JButton();
         jLabel46 = new javax.swing.JLabel();
         jLabel47 = new javax.swing.JLabel();
         jLabel48 = new javax.swing.JLabel();
@@ -175,6 +174,9 @@ public class DetailedPatientFrame extends javax.swing.JFrame {
         jLabel53 = new javax.swing.JLabel();
         jLabel54 = new javax.swing.JLabel();
         jLabel55 = new javax.swing.JLabel();
+        jLabelChangeImage = new javax.swing.JLabel();
+        jLabelConfirmImage = new javax.swing.JLabel();
+        jLabelResetImage = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
@@ -290,7 +292,7 @@ public class DetailedPatientFrame extends javax.swing.JFrame {
         jPanel5.setAutoscrolls(true);
         jPanel5.setMaximumSize(new java.awt.Dimension(530, 630));
         jPanel5.setMinimumSize(new java.awt.Dimension(530, 630));
-        jPanel5.setPreferredSize(new java.awt.Dimension(530, 630));
+        jPanel5.setPreferredSize(new java.awt.Dimension(530, 700));
         jPanel5.setLayout(null);
 
         jLabelDob.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -751,13 +753,13 @@ public class DetailedPatientFrame extends javax.swing.JFrame {
         jPanel5.add(jLabel39);
         jLabel39.setBounds(260, 570, 70, 16);
 
-        jTextFieldEmgLname.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldRelationship.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldEmgLnameActionPerformed(evt);
+                jTextFieldRelationshipActionPerformed(evt);
             }
         });
-        jPanel5.add(jTextFieldEmgLname);
-        jTextFieldEmgLname.setBounds(130, 650, 130, 22);
+        jPanel5.add(jTextFieldRelationship);
+        jTextFieldRelationship.setBounds(130, 650, 130, 22);
 
         jComboBoxEmgCountryCode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "+63" }));
         jPanel5.add(jComboBoxEmgCountryCode);
@@ -867,18 +869,14 @@ public class DetailedPatientFrame extends javax.swing.JFrame {
         jPanel5.add(jLabel45);
         jLabel45.setBounds(10, 650, 40, 16);
 
-        jButton5.setText("Delete");
-        jPanel5.add(jButton5);
-        jButton5.setBounds(390, 70, 80, 23);
-
-        jButton6.setText("Change Image");
-        jPanel5.add(jButton6);
-        jButton6.setBounds(10, 80, 110, 23);
-
-        jButton7.setText("Update");
-        jButton7.setEnabled(false);
-        jPanel5.add(jButton7);
-        jButton7.setBounds(270, 70, 80, 23);
+        jButtonDeletePatientRecord.setText("Delete Patient Record");
+        jButtonDeletePatientRecord.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeletePatientRecordActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButtonDeletePatientRecord);
+        jButtonDeletePatientRecord.setBounds(330, 40, 143, 23);
 
         jLabel46.setForeground(new java.awt.Color(0, 153, 0));
         jLabel46.setText("Submit");
@@ -990,6 +988,36 @@ public class DetailedPatientFrame extends javax.swing.JFrame {
         jPanel5.add(jLabel55);
         jLabel55.setBounds(360, 330, 40, 16);
 
+        jLabelChangeImage.setForeground(new java.awt.Color(0, 0, 255));
+        jLabelChangeImage.setText("Change Image");
+        jLabelChangeImage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelChangeImageMouseClicked(evt);
+            }
+        });
+        jPanel5.add(jLabelChangeImage);
+        jLabelChangeImage.setBounds(40, 80, 90, 16);
+
+        jLabelConfirmImage.setForeground(new java.awt.Color(0, 153, 0));
+        jLabelConfirmImage.setText("Confirm");
+        jLabelConfirmImage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelConfirmImageMouseClicked(evt);
+            }
+        });
+        jPanel5.add(jLabelConfirmImage);
+        jLabelConfirmImage.setBounds(220, 110, 70, 16);
+
+        jLabelResetImage.setForeground(new java.awt.Color(255, 0, 0));
+        jLabelResetImage.setText("Reset Image");
+        jLabelResetImage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelResetImageMouseClicked(evt);
+            }
+        });
+        jPanel5.add(jLabelResetImage);
+        jLabelResetImage.setBounds(220, 80, 70, 16);
+
         jScrollPane2.setViewportView(jPanel5);
 
         jTabbedPane1.addTab("Personal Information", jScrollPane2);
@@ -1047,6 +1075,9 @@ public class DetailedPatientFrame extends javax.swing.JFrame {
     }
     
     private void hideEditField() {
+        jLabelResetImage.setVisible(false);
+        jLabelConfirmImage.setVisible(false);
+        
         jComboBoxBlood.setVisible(false);
         
         jDateChooserDob.setVisible(false);
@@ -1094,12 +1125,15 @@ public class DetailedPatientFrame extends javax.swing.JFrame {
         
         
         jComboBoxEmgCountryCode.setVisible(false);
+        jLabel40.setVisible(false);
         jTextFieldEmgPhoneX.setVisible(false);
+        jLabel41.setVisible(false);
         jTextFieldEmgPhoneY.setVisible(false);
+        jLabel42.setVisible(false);
         jTextFieldEmgPhoneZ.setVisible(false);
         
         
-        jTextFieldEmgLname.setVisible(false);
+        jTextFieldRelationship.setVisible(false);
         
         
         
@@ -1486,9 +1520,9 @@ public class DetailedPatientFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldEmgFnameActionPerformed
 
-    private void jTextFieldEmgLnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldEmgLnameActionPerformed
+    private void jTextFieldRelationshipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldRelationshipActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldEmgLnameActionPerformed
+    }//GEN-LAST:event_jTextFieldRelationshipActionPerformed
 
     private void jTextFieldEmgPhoneXFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldEmgPhoneXFocusGained
         if (jTextFieldEmgPhoneX.getText().equals("XXX")) {
@@ -1556,8 +1590,11 @@ public class DetailedPatientFrame extends javax.swing.JFrame {
         if (jLabel23.isVisible()) {
             jLabel23.setVisible(false);
             jComboBoxEmgCountryCode.setVisible(true);
+            jLabel40.setVisible(true);
             jTextFieldEmgPhoneX.setVisible(true);
+            jLabel41.setVisible(true);
             jTextFieldEmgPhoneY.setVisible(true);
+            jLabel42.setVisible(true);
             jTextFieldEmgPhoneZ.setVisible(true);
             jLabel50.setVisible(true);
             jLabel44.setText("Cancel");
@@ -1565,8 +1602,11 @@ public class DetailedPatientFrame extends javax.swing.JFrame {
         } else {
             jLabel23.setVisible(true);
             jComboBoxEmgCountryCode.setVisible(false);
+            jLabel40.setVisible(false);
             jTextFieldEmgPhoneX.setVisible(false);
+            jLabel41.setVisible(false);
             jTextFieldEmgPhoneY.setVisible(false);
+            jLabel42.setVisible(false);
             jTextFieldEmgPhoneZ.setVisible(false);
             jLabel50.setVisible(false);
             jLabel44.setText("Edit");
@@ -1577,13 +1617,13 @@ public class DetailedPatientFrame extends javax.swing.JFrame {
     private void jLabel45MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel45MouseClicked
         if (jLabel24.isVisible()) {
             jLabel24.setVisible(false);
-            jTextFieldEmgLname.setVisible(true);
+            jTextFieldRelationship.setVisible(true);
             jLabel53.setVisible(true);
             jLabel45.setText("Cancel");
             jLabel45.setForeground(Color.RED);
         } else {
             jLabel24.setVisible(true);
-            jTextFieldEmgLname.setVisible(false);
+            jTextFieldRelationship.setVisible(false);
             jLabel53.setVisible(false);
             jLabel45.setText("Edit");
             jLabel45.setForeground(Color.BLUE);
@@ -1635,11 +1675,36 @@ public class DetailedPatientFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel48MouseClicked
 
     private void jLabel49MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel49MouseClicked
-        // TODO add your handling code here:
+        AddPerson ap = new AddPerson();
+        if (ap.updatePatientEmail(jTextFieldEmail, id)) {
+            populateInfo();
+            jLabel16.setVisible(true);
+            jTextFieldEmail.setVisible(false);
+            jLabel49.setVisible(false);
+            jLabel19.setText("Edit");
+            jLabel19.setForeground(Color.BLUE);
+        }
     }//GEN-LAST:event_jLabel49MouseClicked
 
     private void jLabel50MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel50MouseClicked
-        // TODO add your handling code here:
+        AddPerson ap = new AddPerson();
+        if (ap.updatePatientEmgPhone(jComboBoxEmgCountryCode, jTextFieldEmgPhoneX, jTextFieldEmgPhoneY, jTextFieldEmgPhoneZ, id)) {
+            populateInfo();
+            jLabel23.setVisible(true);
+            jLabel40.setVisible(false);
+            jLabel41.setVisible(false);
+            jLabel42.setVisible(false);
+            jComboBoxEmgCountryCode.setVisible(false);
+            jLabel40.setVisible(false);
+            jTextFieldEmgPhoneX.setVisible(false);
+            jLabel41.setVisible(false);
+            jTextFieldEmgPhoneY.setVisible(false);
+            jLabel42.setVisible(false);
+            jTextFieldEmgPhoneZ.setVisible(false);
+            jLabel50.setVisible(false);
+            jLabel44.setText("Edit");
+            jLabel44.setForeground(Color.BLUE);
+        }
     }//GEN-LAST:event_jLabel50MouseClicked
 
     private void jLabel51MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel51MouseClicked
@@ -1655,20 +1720,110 @@ public class DetailedPatientFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel51MouseClicked
 
     private void jLabel52MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel52MouseClicked
-        // TODO add your handling code here:
+        AddPerson ap = new AddPerson();
+        if (ap.updatePatientAdress(jTextFieldStreet, jTextFieldBarangay, jTextFieldCity, jTextFieldProvince, jTextFieldCountry, id)) {
+            populateInfo();
+            jLabel25.setVisible(true);
+            jLabelStreet.setVisible(false);
+            jLabelBarangay.setVisible(false);
+            jLabelCity.setVisible(false);
+            jLabelProvince.setVisible(false);
+            jLabelCountry.setVisible(false);
+            jTextFieldStreet.setVisible(false);
+            jTextFieldBarangay.setVisible(false);
+            jTextFieldCity.setVisible(false);
+            jTextFieldProvince.setVisible(false);
+            jTextFieldCountry.setVisible(false);
+            
+            jLabel52.setVisible(false);
+            jLabel18.setText("Edit");
+            jLabel18.setForeground(Color.BLUE);
+        }
     }//GEN-LAST:event_jLabel52MouseClicked
 
     private void jLabel53MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel53MouseClicked
-        // TODO add your handling code here:
+        AddPerson ap = new AddPerson();
+        if (ap.updatePatientRelationship(jTextFieldRelationship, id)) {
+            populateInfo();
+            jLabel24.setVisible(true);
+            jTextFieldRelationship.setVisible(false);
+            jLabel53.setVisible(false);
+            jLabel45.setText("Edit");
+            jLabel45.setForeground(Color.BLUE);
+        }
     }//GEN-LAST:event_jLabel53MouseClicked
 
     private void jLabel54MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel54MouseClicked
-        // TODO add your handling code here:
+        AddPerson ap = new AddPerson();
+        if (ap.updatePatientEmgName(jTextFieldEmgFname, jTextFieldEmgLname1, id)) {
+            populateInfo();
+            jLabel22.setVisible(true);
+            jLabel37.setVisible(false);
+            jLabel39.setVisible(false);
+            jTextFieldEmgFname.setVisible(false);
+            jTextFieldEmgLname1.setVisible(false);
+            jLabel54.setVisible(false);
+            jLabel43.setText("Edit");
+            jLabel43.setForeground(Color.BLUE);
+        }
     }//GEN-LAST:event_jLabel54MouseClicked
 
     private void jLabel55MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel55MouseClicked
-        // TODO add your handling code here:
+        AddPerson ap = new AddPerson();
+        if (ap.updatePatientPhone(jComboBoxCountryCode, jTextFieldPhoneX, jTextFieldPhoneY, jTextFieldPhoneZ, id)) {
+            populateInfo();
+            jLabel15.setVisible(true);
+            jLabel27.setVisible(false);
+            jLabel28.setVisible(false);
+            jLabel29.setVisible(false);
+            jComboBoxCountryCode.setVisible(false);
+            jTextFieldPhoneX.setVisible(false);
+            jTextFieldPhoneY.setVisible(false);
+            jTextFieldPhoneZ.setVisible(false);
+            jLabel55.setVisible(false);
+            jLabel26.setText("Edit");
+            jLabel26.setForeground(Color.BLUE);
+        }
     }//GEN-LAST:event_jLabel55MouseClicked
+
+    private void jLabelChangeImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelChangeImageMouseClicked
+        ImageHandler imageHandler = new ImageHandler();
+        imagePath = imageHandler.browseImage(this);
+
+        if (imagePath != null) {
+            jLabel6.setIcon(imageHandler.resizeImage(jLabel6, null, imagePath));
+            jLabelResetImage.setVisible(true);
+            jLabelConfirmImage.setVisible(true);
+        }
+    }//GEN-LAST:event_jLabelChangeImageMouseClicked
+
+    private void jLabelResetImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelResetImageMouseClicked
+        populateInfo();
+        jLabelResetImage.setVisible(false);
+        jLabelConfirmImage.setVisible(false);
+    }//GEN-LAST:event_jLabelResetImageMouseClicked
+
+    private void jLabelConfirmImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelConfirmImageMouseClicked
+        AddPerson ap = new AddPerson();
+        if (ap.updatePatientImage(imagePath, id)) {
+            populateInfo();
+            jLabelResetImage.setVisible(false);
+            jLabelConfirmImage.setVisible(false);
+        }
+    }//GEN-LAST:event_jLabelConfirmImageMouseClicked
+
+    private void jButtonDeletePatientRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeletePatientRecordActionPerformed
+        int result = JOptionPane.showConfirmDialog(null, "Do you want to permanently delete this patient's record?");
+        
+        if (result == JOptionPane.YES_OPTION) {
+            AddPerson pcrud = new AddPerson();
+            if (pcrud.deleteRecord("patients", "id", id)) {
+                JOptionPane.showMessageDialog(null, "Patient Record Deleted");
+            } else {
+                JOptionPane.showMessageDialog(null, "Something Went Wrong");
+            }
+        }
+    }//GEN-LAST:event_jButtonDeletePatientRecordActionPerformed
 
     private void populateInfo() {
         patient = new Patient(id);
@@ -1688,6 +1843,7 @@ public class DetailedPatientFrame extends javax.swing.JFrame {
         jLabel25.setText("<html><body style='width: 300;word-wrap: break-word'>" + patient.getStreet() + ", " + patient.getBarangay() + ", " + patient.getCity() + ", " + patient.getProvince() + ", " + patient.getCountry() + "</body></html>");
         jLabel22.setText(patient.getEmg_fname() + " " + patient.getEmg_lname());
         jLabel23.setText(patient.getEmg_phone());
+        jLabel24.setText(patient.getRelationship());
         
     }
     
@@ -1732,9 +1888,7 @@ public class DetailedPatientFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButtonDeletePatientRecord;
     private javax.swing.JComboBox<String> jComboBoxBlood;
     private javax.swing.JComboBox<String> jComboBoxCountryCode;
     private javax.swing.JComboBox<String> jComboBoxEmgCountryCode;
@@ -1796,7 +1950,9 @@ public class DetailedPatientFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelBarangay;
+    private javax.swing.JLabel jLabelChangeImage;
     private javax.swing.JLabel jLabelCity;
+    private javax.swing.JLabel jLabelConfirmImage;
     private javax.swing.JLabel jLabelCountry;
     private javax.swing.JLabel jLabelDob;
     private javax.swing.JLabel jLabelDob1;
@@ -1807,6 +1963,7 @@ public class DetailedPatientFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelDob3;
     private javax.swing.JLabel jLabelDob9;
     private javax.swing.JLabel jLabelProvince;
+    private javax.swing.JLabel jLabelResetImage;
     private javax.swing.JLabel jLabelSex;
     private javax.swing.JLabel jLabelStreet;
     private javax.swing.JPanel jPanel1;
@@ -1836,7 +1993,6 @@ public class DetailedPatientFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldCountry;
     private javax.swing.JTextField jTextFieldEmail;
     private javax.swing.JTextField jTextFieldEmgFname;
-    private javax.swing.JTextField jTextFieldEmgLname;
     private javax.swing.JTextField jTextFieldEmgLname1;
     private javax.swing.JTextField jTextFieldEmgPhoneX;
     private javax.swing.JTextField jTextFieldEmgPhoneY;
@@ -1848,6 +2004,7 @@ public class DetailedPatientFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldPhoneY;
     private javax.swing.JTextField jTextFieldPhoneZ;
     private javax.swing.JTextField jTextFieldProvince;
+    private javax.swing.JTextField jTextFieldRelationship;
     private javax.swing.JTextField jTextFieldStreet;
     // End of variables declaration//GEN-END:variables
 }

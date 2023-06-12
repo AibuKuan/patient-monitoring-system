@@ -1,6 +1,7 @@
 
 package database;
 
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -84,6 +85,116 @@ public class UpdateOperation {
         try {
             statement = con.prepareStatement(query);
             statement.setString(1, birthdate);
+            
+            return statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UpdateOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return 0;
+    }
+
+    public int updatePatientPhone(String phone, int id) {
+        String query = "UPDATE patients SET phone = ? WHERE id = " + id;
+        PreparedStatement statement;
+        try {
+            statement = con.prepareStatement(query);
+            statement.setString(1, phone);
+            
+            return statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UpdateOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return 0;
+    }
+
+    public int updatePatientEmail(String email, int id) {
+        String query = "UPDATE patients SET email = ? WHERE id = " + id;
+        PreparedStatement statement;
+        try {
+            statement = con.prepareStatement(query);
+            statement.setString(1, email);
+            
+            return statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UpdateOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return 0;
+    }
+
+    public int updatePatientAddress(String street, String barangay, String city, String province, String country, int id) {
+        String query = "UPDATE patients SET street = ?, barangay = ?, city = ?, province = ?, country = ? WHERE id = " + id;
+        PreparedStatement statement;
+        try {
+            statement = con.prepareStatement(query);
+            statement.setString(1, street);
+            statement.setString(2, barangay);
+            statement.setString(3, city);
+            statement.setString(4, province);
+            statement.setString(5, country);
+            
+            return statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UpdateOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return 0;
+    }
+
+    public int updatePatientEmgName(String emgFname, String emgLname, int id) {
+        String query = "UPDATE patients SET emg_fname = ?, emg_lname = ? WHERE id = " + id;
+        PreparedStatement statement;
+        try {
+            statement = con.prepareStatement(query);
+            statement.setString(1, emgFname);
+            statement.setString(2, emgLname);
+            
+            return statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UpdateOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return 0;
+    }
+
+    public int updatePatientEmgPhone(String emgPhone, int id) {
+        String query = "UPDATE patients SET emg_phone = ? WHERE id = " + id;
+        PreparedStatement statement;
+        try {
+            statement = con.prepareStatement(query);
+            statement.setString(1, emgPhone);
+            
+            return statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UpdateOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return 0;
+    }
+
+    public int updatePatientRelationship(String relationship, int id) {
+        String query = "UPDATE patients SET relationship = ? WHERE id = " + id;
+        PreparedStatement statement;
+        try {
+            statement = con.prepareStatement(query);
+            statement.setString(1, relationship);
+            
+            return statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UpdateOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return 0;
+    }
+
+    public int updatePatientImage(FileInputStream pic, int id) {
+        String query = "UPDATE patients SET pic = ? WHERE id = " + id;
+        PreparedStatement statement;
+        try {
+            statement = con.prepareStatement(query);
+            statement.setBinaryStream(1, pic);
             
             return statement.executeUpdate();
         } catch (SQLException ex) {

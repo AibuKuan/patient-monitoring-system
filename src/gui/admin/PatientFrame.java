@@ -2,7 +2,10 @@
 package gui.admin;
 
 import gui.AddPatientForm;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import logic.AddPerson;
 import logic.TableHandler;
 
 public class PatientFrame extends javax.swing.JFrame {
@@ -28,25 +31,30 @@ public class PatientFrame extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jButtonDelete = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        jButtonView = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setLayout(null);
 
-        jLabel1.setText("Physician List");
+        jLabel1.setText("Patients List");
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(40, 30, 88, 29);
+        jLabel1.setBounds(40, 40, 88, 29);
 
-        jButton1.setText("Delete");
-        jPanel1.add(jButton1);
-        jButton1.setBounds(780, 30, 72, 23);
+        jButtonDelete.setText("Delete");
+        jButtonDelete.setEnabled(false);
+        jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeleteActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButtonDelete);
+        jButtonDelete.setBounds(780, 30, 72, 23);
 
         jButton3.setText("Add");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -57,21 +65,12 @@ public class PatientFrame extends javax.swing.JFrame {
         jPanel1.add(jButton3);
         jButton3.setBounds(560, 30, 72, 23);
 
-        jTextField1.setText("Search");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jTextField1);
-        jTextField1.setBounds(140, 30, 230, 22);
-
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         jScrollPane1.setMaximumSize(new java.awt.Dimension(870, 450));
         jScrollPane1.setMinimumSize(new java.awt.Dimension(870, 450));
         jScrollPane1.setPreferredSize(new java.awt.Dimension(870, 450));
 
-        jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
@@ -91,15 +90,15 @@ public class PatientFrame extends javax.swing.JFrame {
         jPanel1.add(jLabel2);
         jLabel2.setBounds(40, 10, 25, 16);
 
-        jButton4.setText("View");
-        jButton4.setEnabled(false);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jButtonView.setText("View");
+        jButtonView.setEnabled(false);
+        jButtonView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jButtonViewActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton4);
-        jButton4.setBounds(670, 30, 72, 23);
+        jPanel1.add(jButtonView);
+        jButtonView.setBounds(670, 30, 72, 23);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,20 +114,31 @@ public class PatientFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void populateTable() {
+    public void populateTable() {
         TableHandler tableHandler = new TableHandler();
         DefaultTableModel tableModel = tableHandler.getAllData("patients");
         jTable1.setModel(tableModel);
+        
+        if (jTable1.getRowCount() != 0) {
+            int columnCount = jTable1.getColumnCount();
+            TableColumn column;
+            for (int i = 0; i < columnCount; i++) {
+                if (i > 5 && i < 7 || i > 8) {
+                    column = jTable1.getColumnModel().getColumn(i);
+                    column.setMinWidth(0);
+                    column.setMaxWidth(0);
+                    column.setWidth(0);
+                    column.setPreferredWidth(0);
+                } 
+            }
+        }
     }
     
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        AddPatientForm addPatient = new AddPatientForm();
+        AddPatientForm addPatient = new AddPatientForm(this);
+        addPatient.setLocationRelativeTo(null);
         addPatient.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         Home home = new Home();
@@ -140,18 +150,33 @@ public class PatientFrame extends javax.swing.JFrame {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         selectedRow = jTable1.getSelectedRow();
         if(selectedRow != -1) {
-            jButton4.setEnabled(true);
+            jButtonView.setEnabled(true);
+            jButtonDelete.setEnabled(true);
             id = (int) jTable1.getValueAt(selectedRow, 0);
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jButtonViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonViewActionPerformed
         jTable1.requestFocus();
         DetailedPatientFrame.id = id;
         DetailedPatientFrame dpt = new DetailedPatientFrame();
         dpt.setLocationRelativeTo(null);
         dpt.setVisible(true);
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_jButtonViewActionPerformed
+
+    private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
+        int result = JOptionPane.showConfirmDialog(null, "This will permanently delete patient no. " + id + " record.");
+        
+        if (result == JOptionPane.YES_OPTION) {
+            AddPerson pcrud = new AddPerson();
+            if (pcrud.deleteRecord("patients", "id", id)) {
+                JOptionPane.showMessageDialog(null, "Patient Record Deleted");
+                populateTable();
+            } else {
+                JOptionPane.showMessageDialog(null, "Something Went Wrong");
+            }
+        }
+    }//GEN-LAST:event_jButtonDeleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -189,14 +214,13 @@ public class PatientFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButtonDelete;
+    private javax.swing.JButton jButtonView;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

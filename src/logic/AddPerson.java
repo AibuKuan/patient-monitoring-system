@@ -4,6 +4,7 @@ package logic;
 import com.toedter.calendar.JDateChooser;
 import database.AddOperation;
 import database.CreateAccountDB;
+import database.DeleteOperation;
 import database.UpdateOperation;
 import gui.AddPatientForm;
 import java.io.File;
@@ -50,7 +51,9 @@ public class AddPerson {
             emgPhoneX, // patient
             emgPhoneY, // patient
             emgPhoneZ, // patient
-            emgCountryCode; // patient
+            emgCountryCode, // patient
+            emgPhone, // patient
+            relationship; //patient
     
     public Boolean addEmployee(JTextField[] textArray, JDateChooser[] dateArray, JComboBox[] comboArray, ButtonGroup[] buttonArray, String imagePath) {
         this.fname = textArray[0].getText();
@@ -153,8 +156,8 @@ public class AddPerson {
             }
         }
         
-        String phone = countryCode + " (" + phoneX + ") " + phoneY + " - " + phoneZ;
-        String emgPhone = emgCountryCode + " (" + emgPhoneX + ") " + emgPhoneY + " - " + emgPhoneZ;
+        this.phone = countryCode + " (" + phoneX + ") " + phoneY + " - " + phoneZ;
+        this.emgPhone = emgCountryCode + " (" + emgPhoneX + ") " + emgPhoneY + " - " + emgPhoneZ;
         
         FileInputStream pic = null;
         try {
@@ -219,6 +222,111 @@ public class AddPerson {
         
         UpdateOperation updtOp = new UpdateOperation();
         if (updtOp.updatePatientBirthdate(birthdate, id) != 0) {
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public boolean updatePatientPhone(JComboBox<String> jComboBoxCountryCode, JTextField jTextFieldPhoneX, JTextField jTextFieldPhoneY, JTextField jTextFieldPhoneZ, int id) {
+        this.countryCode = jComboBoxCountryCode.getSelectedItem().toString();
+        this.phoneX = jTextFieldPhoneX.getText();
+        this.phoneY = jTextFieldPhoneY.getText();
+        this.phoneZ = jTextFieldPhoneZ.getText();
+        this.phone = countryCode + " (" + phoneX + ") " + phoneY + " - " + phoneZ;
+        
+        UpdateOperation updtOp = new UpdateOperation();
+        if (updtOp.updatePatientPhone(phone, id) != 0) {
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public boolean updatePatientEmail(JTextField jTextFieldEmail, int id) {
+        this.email = jTextFieldEmail.getText();
+        
+        UpdateOperation updtOp = new UpdateOperation();
+        if (updtOp.updatePatientEmail(email, id) != 0) {
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public boolean updatePatientAdress(JTextField jTextFieldStreet, JTextField jTextFieldBarangay, JTextField jTextFieldCity, JTextField jTextFieldProvince, JTextField jTextFieldCountry, int id) {
+        this.street = jTextFieldStreet.getText();
+        this.barangay = jTextFieldBarangay.getText();
+        this.city = jTextFieldCity.getText();
+        this.province = jTextFieldProvince.getText();
+        this.country = jTextFieldCountry.getText();
+        
+        UpdateOperation updtOp = new UpdateOperation();
+        if (updtOp.updatePatientAddress(street, barangay, city, province, country, id) != 0) {
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public boolean updatePatientEmgName(JTextField jTextFieldEmgFname, JTextField jTextFieldEmgLname, int id) {
+        this.emgFname = jTextFieldEmgFname.getText();
+        this.emgLname = jTextFieldEmgLname.getText();
+        System.out.println("emgFname: " + emgFname);
+        System.out.println("emgLname: " + emgLname);
+        UpdateOperation updtOp = new UpdateOperation();
+        if (updtOp.updatePatientEmgName(emgFname, emgLname, id) != 0) {
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public boolean updatePatientEmgPhone(JComboBox<String> jComboBoxEmgCountryCode, JTextField jTextFieldEmgPhoneX, JTextField jTextFieldEmgPhoneY, JTextField jTextFieldEmgPhoneZ, int id) {
+        this.emgCountryCode = jComboBoxEmgCountryCode.getSelectedItem().toString();
+        this.emgPhoneX = jTextFieldEmgPhoneX.getText();
+        this.emgPhoneY = jTextFieldEmgPhoneY.getText();
+        this.emgPhoneZ = jTextFieldEmgPhoneZ.getText();
+        this.emgPhone = emgCountryCode + " (" + emgPhoneX + ") " + emgPhoneY + " - " + emgPhoneX;
+        
+        UpdateOperation updtOp = new UpdateOperation();
+        if (updtOp.updatePatientEmgPhone(emgPhone, id) != 0) {
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public boolean updatePatientRelationship(JTextField jTextFieldRelationship, int id) {
+        this.relationship = jTextFieldRelationship.getText();
+        
+        UpdateOperation updtOp = new UpdateOperation();
+        if (updtOp.updatePatientRelationship(relationship, id) != 0) {
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public boolean updatePatientImage(String imagePath, int id) {
+        FileInputStream pic = null;
+        try {
+            pic = new FileInputStream(new File(imagePath));
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(AddPerson.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        UpdateOperation updtOp = new UpdateOperation();
+        if (updtOp.updatePatientImage(pic, id) != 0) {
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public boolean deleteRecord(String tableName, String idName, int id) {
+        DeleteOperation delOp = new DeleteOperation();
+        if (delOp.deleteHealthCondition(tableName, idName, id) != 0) {
             return true;
         }else {
             return false;

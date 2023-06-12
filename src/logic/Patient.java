@@ -4,12 +4,9 @@ package logic;
 import database.ReadOperation;
 import java.util.Date;
 import java.sql.ResultSet;
-import java.sql.Blob;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,6 +29,7 @@ public class Patient {
     private String emg_fname;
     private String emg_lname;
     private String emg_phone;
+    private String relationship;
     
     
     
@@ -48,6 +46,7 @@ public class Patient {
         //ResultSet rs2 = ro.readPatientCondition(id);
         
         try {
+            
             if (rs1.next()) {
                 this.id = id;
                 this.first_name = rs1.getString("first_name");
@@ -67,9 +66,12 @@ public class Patient {
                 this.emg_fname = rs1.getString("emg_fname");
                 this.emg_lname = rs1.getString("emg_lname");
                 this.emg_phone = rs1.getString("emg_phone");
-                
+                this.relationship = rs1.getString("relationship");
+
                 this.age = calculateAge(rs1.getDate("birthdate"));
             }
+            
+            
             
 //            ArrayList<Object[]> patientCondition = new ArrayList<>();
 //            int rowCount = 0; // Number of rows in the result set
@@ -109,9 +111,7 @@ public class Patient {
     
     public static int calculateAge(Date birthDate) {
         LocalDate localBirthDate = new java.sql.Date(birthDate.getTime()).toLocalDate();
-        System.out.println(localBirthDate);
         LocalDate currentDate = LocalDate.now();
-        System.out.println(currentDate);
         Period period = Period.between(localBirthDate, currentDate);
         return period.getYears();
     }
@@ -190,6 +190,10 @@ public class Patient {
 
     public String getEmg_phone() {
         return emg_phone;
+    }
+
+    public String getRelationship() {
+        return relationship;
     }
 
     public Date[] getDiagnosis_date() {

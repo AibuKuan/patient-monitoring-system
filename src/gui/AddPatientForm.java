@@ -4,6 +4,7 @@ package gui;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import com.formdev.flatlaf.ui.FlatTextBorder;
 import com.toedter.calendar.JDateChooser;
+import gui.admin.PatientFrame;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
@@ -12,23 +13,25 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import logic.FieldValidator;
 import logic.ImageHandler;
 import logic.AddPerson;
 
 public class AddPatientForm extends javax.swing.JFrame {
 
     String imagePath = null;
+    PatientFrame patientFrame;
     /**
      * Creates new form AddPatientForm
+     * @param patientFrame
      */
-    public AddPatientForm() {
+    public AddPatientForm(PatientFrame patientFrame) {
         try {
             UIManager.setLookAndFeel(new FlatMacLightLaf());
         } catch (UnsupportedLookAndFeelException ex) {
             Logger.getLogger(AddPatientForm.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
+        this.patientFrame = patientFrame;
         jRadioButtonMale.setActionCommand("Male");
         jRadioButtonFemale.setActionCommand("Female");
         jRadioButtonOther.setActionCommand("Other");
@@ -94,7 +97,7 @@ public class AddPatientForm extends javax.swing.JFrame {
         jTextFieldPhoneY = new javax.swing.JTextField();
         jTextFieldPhoneZ = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setLayout(null);
 
@@ -609,6 +612,7 @@ public class AddPatientForm extends javax.swing.JFrame {
         AddPerson ap = new AddPerson();
         if (ap.addPatient(this, textArray, dateArray, comboArray, buttonArray, imagePath)) {
             JOptionPane.showMessageDialog(this, "Patient Added Successfully");
+            patientFrame.populateTable();
         }else {
             JOptionPane.showMessageDialog(this, "Account Not Added. Something Went Wrong :(");
         }
@@ -690,7 +694,7 @@ public class AddPatientForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddPatientForm().setVisible(true);
+                new AddPatientForm(null).setVisible(true);
             }
         });
     }
