@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.ResultSetMetaData;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
 
 public class TableHandler extends DefaultTableModel {
     @Override
@@ -78,6 +80,42 @@ public class TableHandler extends DefaultTableModel {
             Logger.getLogger(TableHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        return tableModel;
+    }
+
+    public DefaultTableModel getPersonData(JTextField jTextFieldSearchBar, JComboBox<String> jComboBoxFilter, String patients) {
+        String keyword = jTextFieldSearchBar.getText();
+        String filter = jComboBoxFilter.getSelectedItem().toString();
+        String table = patients;
+        
+        TableHandler tableModel = new TableHandler();
+        ResultSet rs;
+
+        try {
+            ReadOperation read = new ReadOperation();
+            rs = read.readPersonData(keyword, filter, table);
+            if (rs != null) {
+                int personDataColumnCount = rs.getMetaData().getColumnCount();
+                ResultSetMetaData personDataColumnName = rs.getMetaData();
+                for (int i = 1; i <= personDataColumnCount; i++) {
+                    tableModel.addColumn(personDataColumnName.getColumnName(i));
+                }
+
+                while (rs.next()) {
+                    Object[] rowData = new Object[tableModel.getColumnCount()];
+                    //adding health_condition data
+                    for (int i = 1; i <= personDataColumnCount; i++) {
+                        rowData[i - 1] = rs.getObject(i);
+                    }
+
+                    tableModel.addRow(rowData);
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(TableHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         return tableModel;
     }
 }

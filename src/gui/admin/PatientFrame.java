@@ -18,6 +18,9 @@ public class PatientFrame extends javax.swing.JFrame {
     public PatientFrame() {
         initComponents();
         populateTable();
+        
+        jLabelNoDataFound.setVisible(false);
+        jLabelNoDataHint.setVisible(false);
     }
 
     /**
@@ -33,10 +36,16 @@ public class PatientFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButtonDelete = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jLabelNoDataHint = new javax.swing.JLabel();
+        jLabelNoDataFound = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jButtonView = new javax.swing.JButton();
+        jComboBoxFilter = new javax.swing.JComboBox<>();
+        jLabelSearchPlaceholder = new javax.swing.JLabel();
+        jTextFieldSearchBar = new javax.swing.JTextField();
+        jButtonSearch = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,6 +73,17 @@ public class PatientFrame extends javax.swing.JFrame {
         });
         jPanel1.add(jButton3);
         jButton3.setBounds(560, 30, 72, 23);
+
+        jLabelNoDataHint.setText("Make sure that you have selected a filter.");
+        jLabelNoDataHint.setEnabled(false);
+        jPanel1.add(jLabelNoDataHint);
+        jLabelNoDataHint.setBounds(370, 310, 220, 16);
+
+        jLabelNoDataFound.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabelNoDataFound.setText("No Data Was Found :(");
+        jLabelNoDataFound.setEnabled(false);
+        jPanel1.add(jLabelNoDataFound);
+        jLabelNoDataFound.setBounds(290, 210, 370, 140);
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         jScrollPane1.setMaximumSize(new java.awt.Dimension(870, 450));
@@ -99,6 +119,35 @@ public class PatientFrame extends javax.swing.JFrame {
         });
         jPanel1.add(jButtonView);
         jButtonView.setBounds(670, 30, 72, 23);
+
+        jComboBoxFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Filter", "id", "first_name", "last_name", "sex", "email" }));
+        jPanel1.add(jComboBoxFilter);
+        jComboBoxFilter.setBounds(340, 30, 89, 22);
+
+        jLabelSearchPlaceholder.setText("Look for...");
+        jLabelSearchPlaceholder.setEnabled(false);
+        jPanel1.add(jLabelSearchPlaceholder);
+        jLabelSearchPlaceholder.setBounds(140, 30, 60, 20);
+
+        jTextFieldSearchBar.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextFieldSearchBarFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldSearchBarFocusLost(evt);
+            }
+        });
+        jPanel1.add(jTextFieldSearchBar);
+        jTextFieldSearchBar.setBounds(130, 30, 210, 22);
+
+        jButtonSearch.setText("Search");
+        jButtonSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonSearchMouseClicked(evt);
+            }
+        });
+        jPanel1.add(jButtonSearch);
+        jButtonSearch.setBounds(230, 50, 72, 23);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -178,6 +227,53 @@ public class PatientFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonDeleteActionPerformed
 
+    private void jTextFieldSearchBarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldSearchBarFocusGained
+        jLabelSearchPlaceholder.setVisible(false);
+    }//GEN-LAST:event_jTextFieldSearchBarFocusGained
+
+    private void jTextFieldSearchBarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldSearchBarFocusLost
+        if (jTextFieldSearchBar.getText().isEmpty()) {
+            jLabelSearchPlaceholder.setVisible(true);
+        }
+    }//GEN-LAST:event_jTextFieldSearchBarFocusLost
+
+    private void jButtonSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSearchMouseClicked
+        if (jTextFieldSearchBar.getText().isEmpty()) {
+            populateTable();
+            jLabelNoDataFound.setVisible(false);
+            jLabelNoDataHint.setVisible(false);
+        }else if (jComboBoxFilter.getSelectedIndex() == 0){
+            DefaultTableModel tableModel = new DefaultTableModel();
+            jTable1.setModel(tableModel);
+            jLabelNoDataFound.setVisible(true);
+            jLabelNoDataHint.setVisible(true);
+        }else {
+            TableHandler tableHandler = new TableHandler();
+            DefaultTableModel tableModel = tableHandler.getPersonData(jTextFieldSearchBar, jComboBoxFilter, "patients");
+            jTable1.setModel(tableModel);
+
+            if (jTable1.getRowCount() != 0) {
+                jLabelNoDataFound.setVisible(false);
+                jLabelNoDataHint.setVisible(false);
+
+                int columnCount = jTable1.getColumnCount();
+                TableColumn column;
+                for (int i = 0; i < columnCount; i++) {
+                    if (i > 5 && i < 7 || i > 8) {
+                        column = jTable1.getColumnModel().getColumn(i);
+                        column.setMinWidth(0);
+                        column.setMaxWidth(0);
+                        column.setWidth(0);
+                        column.setPreferredWidth(0);
+                    }
+                }
+            } else {
+                jLabelNoDataFound.setVisible(true);
+                jLabelNoDataHint.setVisible(true);
+            }
+        }
+    }//GEN-LAST:event_jButtonSearchMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -216,11 +312,17 @@ public class PatientFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonDelete;
+    private javax.swing.JButton jButtonSearch;
     private javax.swing.JButton jButtonView;
+    private javax.swing.JComboBox<String> jComboBoxFilter;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabelNoDataFound;
+    private javax.swing.JLabel jLabelNoDataHint;
+    private javax.swing.JLabel jLabelSearchPlaceholder;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextFieldSearchBar;
     // End of variables declaration//GEN-END:variables
 }

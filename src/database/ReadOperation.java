@@ -66,4 +66,25 @@ public class ReadOperation {
         System.out.println("Patient Health Conditon ResultSet is Empty. Patient ID = " + id);
         return null;
     }
+
+    public ResultSet readPersonData(String keyword, String filter, String table) {
+        String query = "SELECT * FROM " + table + " WHERE " + filter + " = ?";
+        ResultSet rs;
+        
+        try {
+            PreparedStatement statement = con.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            statement.setString(1, keyword);
+            
+            rs = statement.executeQuery();
+            if (rs.next()) {
+                rs.beforeFirst();
+                return rs;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ReadOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
+        
+    }
 }
